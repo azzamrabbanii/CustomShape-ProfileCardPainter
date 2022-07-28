@@ -35,7 +35,9 @@
 package com.raywenderlich.android.starsofscience
 
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.raywenderlich.android.starsofscience.utils.resToPx
 import com.raywenderlich.android.starsofscience.utils.toColorInt
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -46,6 +48,25 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    profileCardContainer.setBackgroundColor(R.color.colorPrimary.toColorInt(this))
+    val azureColor = R.color.colorPrimary.toColorInt(this)
+    val avatarRadius = R.dimen.avatar_radius.resToPx(this)
+    val avatarMargin = R.dimen.avatar_margin.resToPx(this)
+    val cardWidth = ViewGroup.LayoutParams.MATCH_PARENT
+    val cardHeight = R.dimen.profile_card_height.resToPx(this).toInt()
+
+    val painter = ProfileCardPainter(
+      color = azureColor,
+      avatarRadius = avatarRadius,
+      avatarMargin = avatarMargin
+    )
+
+    profileCardContainer.addView(
+      CustomPainter(
+        context = this,
+        width = cardWidth,
+        height = cardHeight,
+        painter = painter
+      )
+    )
   }
 }
